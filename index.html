@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ইউনিক ডেন্টাল কেয়ার – সিরিয়াল ম্যানেজার</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;--bg:#eef6f6;--surface:#fff;--ink:#12292c;--muted:#5a7478;--line:#d3e3e4;--brand:#0b6e75;--brand-ink:#fff;--soft:#d9eff0;--warn:#b45309;--warn-bg:#fdf0d9;--ok:#1b7a43;--ok-bg:#dcf3e4;--bad:#b3261e;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1b1d;--surface:#142a2d;--ink:#e4f1f2;--muted:#93b0b3;--line:#244245;--brand:#4cc3cb;--brand-ink:#082326;--soft:#1c3d41;--warn:#f0b255;--warn-bg:#3a2d14;--ok:#66d092;--ok-bg:#16361f;--bad:#ff8a80}}
+:root[data-theme="dark"]{--bg:#0d1b1d;--surface:#142a2d;--ink:#e4f1f2;--muted:#93b0b3;--line:#244245;--brand:#4cc3cb;--brand-ink:#082326;--soft:#1c3d41;--warn:#f0b255;--warn-bg:#3a2d14;--ok:#66d092;--ok-bg:#16361f;--bad:#ff8a80}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans Bengali","Kalpurush","Siyam Rupali",system-ui,sans-serif;line-height:1.6;font-size:16px}
+.wrap{max-width:640px;margin:0 auto;padding:16px}
+header{padding:8px 0 14px}
+h1{margin:0;font-size:1.6rem;font-weight:700;color:var(--brand);line-height:1.3}
+.date{color:var(--muted);font-size:.95rem}
+.demo{background:var(--warn-bg);color:var(--warn);border-radius:10px;padding:8px 12px;font-size:.88rem;margin-bottom:14px}
+.tabs{display:flex;gap:6px;background:var(--soft);padding:5px;border-radius:14px;margin-bottom:16px}
+.tabs button{flex:1;border:0;background:transparent;color:var(--ink);font:inherit;font-weight:500;padding:10px;border-radius:10px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--brand);color:var(--brand-ink)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:16px}
+h2{margin:0 0 12px;font-size:1.1rem}
+label{display:block;font-size:.9rem;color:var(--muted);margin:10px 0 4px}
+input,textarea{width:100%;font:inherit;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+input:focus,textarea:focus,button:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+.primary{width:100%;margin-top:14px;border:0;background:var(--brand);color:var(--brand-ink);font:inherit;font-weight:700;padding:12px;border-radius:10px;cursor:pointer}
+.err{color:var(--bad);font-size:.9rem;margin-top:8px;min-height:1.2em}
+.sms{background:var(--soft);border-radius:12px;padding:12px;margin-top:4px}
+.sms p{margin:0 0 10px;white-space:pre-wrap}
+.sms small{color:var(--muted);display:block;margin-top:8px}
+.ghost{border:1px solid var(--brand);background:transparent;color:var(--brand);font:inherit;padding:7px 14px;border-radius:9px;cursor:pointer}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}
+.stat b{display:block;font-size:1.9rem;line-height:1.2}
+.stat span{font-size:.85rem;color:var(--muted)}
+.stat.w b{color:var(--warn)}.stat.d b{color:var(--ok)}
+.next{border-left:5px solid var(--brand);background:var(--soft);border-radius:10px;padding:10px 14px;margin-bottom:14px}
+.next small{color:var(--muted);display:block}
+.next strong{font-size:1.2rem}
+ul{list-style:none;margin:0;padding:0}
+li{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:11px 0;border-top:1px solid var(--line)}
+li:first-child{border-top:0}
+.no{flex:0 0 36px;height:36px;border-radius:50%;background:var(--soft);color:var(--brand);font-weight:700;display:grid;place-items:center}
+.info{flex:1;min-width:0}
+.info b{display:block;overflow-wrap:anywhere}
+.info span{color:var(--muted);font-size:.9rem}
+.tag{font-size:.8rem;padding:2px 9px;border-radius:99px;background:var(--warn-bg);color:var(--warn);white-space:nowrap}
+li.done .tag{background:var(--ok-bg);color:var(--ok)}
+li.done .info b{color:var(--ok)}
+li.done{background:var(--ok-bg);border-radius:10px;padding-left:10px;padding-right:10px}
+.acts{display:flex;gap:6px;flex-direction:column}
+.sm{border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:.85rem;padding:5px 10px;border-radius:8px;cursor:pointer}
+.sm.del{color:var(--bad)}
+.empty{color:var(--muted);text-align:center;padding:18px 0}
+.foot{text-align:center;margin:6px 0 20px}
+.foot button{border:0;background:none;color:var(--muted);font:inherit;font-size:.85rem;text-decoration:underline;cursor:pointer}
+textarea{resize:vertical}
+.total{display:flex;align-items:baseline;gap:10px;background:var(--soft);border-radius:10px;padding:10px 14px;margin-bottom:6px}
+.total b{font-size:1.9rem;color:var(--brand);line-height:1.2}
+.total span{color:var(--muted)}
+#days li,#dates1 li,#dates2 li{justify-content:space-between}
+#days li b{color:var(--ok)}
+#dates1 li b,#dates2 li b{color:var(--brand)}
+#dates1 li,#dates2 li{cursor:pointer}
+.det{flex:0 0 100%;padding:2px 0 6px 6px;cursor:default}
+.ent{padding:6px 10px;border-left:3px solid var(--line);margin:6px 0}
+.ent strong{display:block;font-weight:500}
+.ent span{display:block;color:var(--muted);font-size:.9rem;overflow-wrap:anywhere}
+.note{flex:0 0 100%;padding-left:46px}
+.note p{margin:2px 0;font-size:.92rem;overflow-wrap:anywhere}
+.note .nv{color:var(--brand);font-weight:500}
+.note .ghost{margin-top:6px;padding:5px 12px;font-size:.88rem}
+.nrow{display:flex;gap:8px;margin-top:10px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<h1>ইউনিক ডেন্টাল কেয়ার</h1>
+<div style="font-weight:500;margin-top:2px">ডা. মামুনুর রশিদ</div>
+<div class="date">MBBS, FCPS</div>
+<div class="date">কচুক্ষেত বাজার, আশার আলো মার্কেট (ষষ্ঠ তলা), ঢাকা ক্যান্টনমেন্ট, ঢাকা-১২৩০</div>
+<div class="date">মোবাইল: ০১৭১২১৯৯৯৭৭</div>
+<div class="date" id="today"></div>
+</header>
+<div class="demo" id="rw" hidden style="color:var(--bad)">সতর্কতা: আপনার অ্যাকাউন্টে শুধু দেখার অনুমতি আছে, তাই কোনো তথ্য সংরক্ষণ হবে না। মালিকের কাছে Contributor বা Editor অনুমতি চান।</div>
+<div class="demo" id="mode">এটি ডেমো। এসএমএস আসলে যায় না, বার্তাটি শুধু দেখানো হয়। তথ্য এই ফোনের ব্রাউজারে সংরক্ষিত থাকে।</div>
+
+<div class="tabs" role="tablist">
+<button role="tab" id="t1" aria-selected="true">সেক্রেটারি</button>
+<button role="tab" id="t2" aria-selected="false">ডাক্তার</button>
+</div>
+
+<section id="v1">
+<div class="panel">
+<h2>নতুন সিরিয়াল</h2>
+<label for="name">রোগীর নাম</label>
+<input id="name" placeholder="যেমন: রহিম উদ্দিন" autocomplete="off">
+<label for="phone">মোবাইল নম্বর</label>
+<input id="phone" inputmode="numeric" placeholder="০১৭XXXXXXXX" autocomplete="off">
+<label for="vdate">ভিজিটের তারিখ</label>
+<input id="vdate" type="date">
+<label for="time">আসার সময়</label>
+<input id="time" type="time" value="10:00">
+<label for="reason">কী কাজে এসেছেন (সংক্ষেপে)</label>
+<input id="reason" maxlength="80" placeholder="যেমন: দাঁত ব্যথা, স্কেলিং" autocomplete="off">
+<div class="err" id="err"></div>
+<button class="primary" id="add">সিরিয়াল যোগ করুন</button>
+</div>
+
+<div class="panel" id="smsBox" hidden>
+<h2>রোগীর কাছে যাওয়া এসএমএস</h2>
+<div class="sms">
+<p id="smsText"></p>
+<button class="ghost" id="copy">কপি করুন</button>
+<small id="smsTo"></small>
+</div>
+</div>
+
+<div class="panel">
+<h2>তারিখ অনুযায়ী ভিজিটর</h2>
+<ul id="dates1"></ul>
+<h2 style="margin-top:18px">সিরিয়াল তালিকা</h2>
+<ul id="list1"></ul>
+</div>
+</section>
+
+<section id="lock" hidden>
+<div class="panel">
+<h2>ডাক্তারের অংশ লক করা আছে</h2>
+<label for="pw">পাসওয়ার্ড</label>
+<input id="pw" type="password" autocomplete="off">
+<div class="err" id="pwerr"></div>
+<button class="primary" id="unlock" style="margin-top:4px">খুলুন</button>
+</div>
+</section>
+<section id="v2" hidden>
+<div style="text-align:right;margin-bottom:10px"><button class="ghost" id="lockbtn">লক করুন</button></div>
+<div class="panel" style="padding:10px 16px"><label for="ddate" style="margin-top:0">কোন তারিখের রোগী দেখবেন</label><input id="ddate" type="date"><label for="q">নাম বা মোবাইল দিয়ে যেকোনো রোগী খুঁজুন</label><input id="q" placeholder="নাম বা মোবাইল নম্বর" autocomplete="off"></div>
+<div class="stats">
+<div class="stat"><b id="sTotal">০</b><span>মোট রোগী</span></div>
+<div class="stat d"><b id="sDone">০</b><span>দেখা হয়েছে</span></div>
+<div class="stat w"><b id="sWait">০</b><span>অপেক্ষায়</span></div>
+</div>
+<div class="total" style="margin-bottom:14px"><b id="incToday">০</b><span id="incLbl">আজকের মোট আয় (টাকা)</span></div>
+<div class="next" id="next" hidden><small>পরবর্তী রোগী</small><strong id="nextTxt"></strong></div>
+<div class="panel">
+<h2 id="h2day">আজকের রোগী</h2>
+<ul id="list2"></ul>
+</div>
+<div class="panel">
+<h2>আসন্ন ভিজিটর (তারিখ অনুযায়ী)</h2>
+<ul id="dates2"></ul>
+<h2 style="margin-top:18px">ভিজিটের হিসাব</h2>
+<div class="total"><b id="allTotal">০</b><span>এ পর্যন্ত মোট রোগী দেখা হয়েছে</span></div>
+<div class="total"><b id="allInc">০</b><span>এ পর্যন্ত মোট আয় (টাকা)</span></div>
+<ul id="days"></ul>
+</div>
+<div class="panel">
+<h2>ভুলে যাওয়া রোগী যোগ করুন</h2>
+<label for="dn">রোগীর নাম</label><input id="dn" autocomplete="off">
+<label for="dp">মোবাইল নম্বর</label><input id="dp" inputmode="numeric" autocomplete="off">
+<label for="dd">ভিজিটের তারিখ</label><input id="dd" type="date">
+<label for="dtm">সময়</label><input id="dtm" type="time" value="10:00">
+<label for="dr">আসার কারণ</label><input id="dr" maxlength="80" autocomplete="off">
+<label for="df">ফি (টাকা)</label><input id="df" inputmode="numeric" placeholder="যেমন: ৫০০" autocomplete="off">
+<label style="display:flex;gap:8px;align-items:center"><input id="dc" type="checkbox" checked style="width:auto"> দেখা হয়ে গেছে</label>
+<div class="err" id="derr"></div>
+<button class="primary" id="dadd">রোগী যোগ করুন</button>
+</div>
+<div class="panel" style="border-color:var(--bad)">
+<h2 style="color:var(--bad)">সব তথ্য মুছুন</h2>
+<p style="margin:0 0 10px;color:var(--muted);font-size:.92rem">সব রোগীর তথ্য, নোট ও আয়ের হিসাব স্থায়ীভাবে মুছে যাবে, ফেরানো যাবে না। আগে CSV ডাউনলোড করে রাখুন। নিশ্চিত করতে ডাক্তারের পাসওয়ার্ড দিন।</p>
+<input id="wipeTxt" type="password" placeholder="ডাক্তারের পাসওয়ার্ড" autocomplete="off">
+<div class="err" id="wipeMsg"></div>
+<button class="primary" id="wipe" style="background:var(--bad);color:var(--surface)">সব তথ্য মুছে ফেলুন</button>
+</div>
+</section>
+
+<div id="toast" hidden style="position:fixed;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom,0px));max-width:616px;margin:0 auto;padding:12px 14px;border-radius:12px;z-index:50;text-align:center;font-weight:500"></div>
+<div id="impbox" hidden style="text-align:center;margin:6px 0"><button class="primary" id="imp" style="margin-top:0">এই ফোনের আগের রোগীর তথ্য লাইভ ডাটাবেসে তুলুন</button></div>
+<div id="dlbox" hidden style="text-align:center;margin:6px 0"><button class="ghost" id="dl" style="margin:2px">ডাউনলোড (CSV)</button> <button class="ghost" id="share" style="margin:2px">শেয়ার করুন</button><div class="err" id="dlmsg" style="color:var(--muted)"></div></div>
+<div class="foot" hidden><button id="reset">ডেমো ডেটা মুছে নতুন করে শুরু করুন</button></div>
+<div class="date" style="text-align:center;margin:0 0 20px">তৈরি করেছেন: Md. Abid Hussain Khan<br>ইমেইল: abid.telco@gmail.com<br>ফোন: ০১৭৬৬৬৯৫৯৯৬</div>
+</div>
+
+<script>
+var KEY="unique-dental-demo-v1";
+var D="০১২৩৪৫৬৭৮৯";
+function bn(n){return String(n).replace(/\d/g,function(d){return D[d]})}
+function en(s){return s.replace(/[০-৯]/g,function(d){return D.indexOf(d)})}
+function fmt(t){var p=t.split(":").map(Number),h=p[0],m=p[1];
+var per=h>=20||h<4?"রাত":h<6?"ভোর":h<12?"সকাল":h<15?"দুপুর":h<18?"বিকাল":"সন্ধ্যা";
+return per+" "+bn(h%12||12)+":"+bn(String(m).padStart(2,"0"))}
+function pad(n){return String(n).padStart(2,"0")}
+function iso(d){return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())}
+function td(){return iso(new Date())}
+function seed(){return[];var t=td(),a=[
+{id:1,name:"রহিম উদ্দিন",phone:"01711223344",time:"10:00",status:"done",date:t,fee:500,reason:"দাঁত ব্যথা"},
+{id:2,name:"সালমা বেগম",phone:"01822334455",time:"10:30",status:"waiting",date:t,reason:"স্কেলিং"},
+{id:3,name:"কামরুল হাসান",phone:"01933445566",time:"11:00",status:"waiting",date:t,reason:"ফিলিং"},{id:4,name:"নাসরিন আক্তার",phone:"01644556677",time:"09:30",status:"waiting",date:iso(new Date(Date.now()+864e5)),reason:"দাঁত তোলা"}];
+[5,7,4].forEach(function(c,k){var d=new Date();d.setDate(d.getDate()-k-1);for(var i=0;i<c;i++)a.push({id:-(k*100+i+1),name:"পুরনো রোগী",phone:"01700000000",time:"10:00",status:"done",date:iso(d),fee:500})});return a}
+var items,editingId=null;
+try{var s=localStorage.getItem(KEY);items=s?JSON.parse(s):seed()}catch(e){items=seed()}
+items.forEach(function(o){if(!o.date)o.date=td()});
+function save(){try{localStorage.setItem(KEY,JSON.stringify(items))}catch(e){}}
+var store=null,fdb=null,feesMap={},mig={};
+function toast(m,ok){var t=$("toast");t.textContent=m;t.style.background=ok?"var(--ok-bg)":"var(--warn-bg)";t.style.color=ok?"var(--ok)":"var(--bad)";t.style.border="1px solid currentColor";t.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(function(){t.hidden=true},ok?1800:7000)}
+function okT(){toast("সংরক্ষিত হয়েছে ✓",true)}
+function werr(){toast("সংরক্ষণ হয়নি। তথ্য বদলানোর অনুমতি আছে কিনা মালিককে জিজ্ঞাসা করুন।",false);var m=$("mode");m.textContent="সংরক্ষণ হয়নি। তথ্য বদলানোর অনুমতি আছে কিনা মালিককে জিজ্ঞাসা করুন।";m.style.background="var(--warn-bg)";m.style.color="var(--bad)"}
+function clean(o){return JSON.parse(JSON.stringify(o))}
+function strip(o){var c=clean(o);delete c.fee;return c}
+function feeOf(o){return store?(feesMap[o.id]?feesMap[o.id].fee:0):(o.fee||0)}
+function feeList(){return store?Object.keys(feesMap).map(function(k){return feesMap[k]}):items.filter(function(o){return o.fee}).map(function(o){return{date:o.date,fee:o.fee}})}
+function setFee(it,n){if(!store){upd(it,{fee:n});return}
+if(n){feesMap[it.id]={id:it.id,date:it.date,fee:n};fdb.doc(String(it.id)).set({id:it.id,date:it.date,fee:n}).catch(werr)}
+else{delete feesMap[it.id];fdb.doc(String(it.id)).delete().catch(werr)}}
+function put(it){if(store)store.doc(String(it.id)).set(clean(it)).then(okT,werr);else save()}
+function upd(it,f){var o=items.filter(function(x){return x.id===it.id})[0]||it;Object.assign(o,f);if(store)store.doc(String(it.id)).update(clean(f)).then(okT,function(){store.doc(String(it.id)).set(strip(o)).then(okT,werr)});else save()}
+function del(it){items=items.filter(function(o){return o.id!==it.id});if(store)store.doc(String(it.id)).delete().catch(werr);else save()}
+var viewDate=null,showDate=false;
+function search(q){var d=en(q).replace(/\D/g,"");return items.filter(function(o){return (o.name||"").toLowerCase().indexOf(q)>-1||(d.length>2&&String(o.phone).indexOf(d)>-1)}).sort(function(a,b){return a.date<b.date?1:a.date>b.date?-1:a.time<b.time?1:-1})}
+function vd(){return viewDate||td()}
+function sorted(){return items.filter(function(o){return o.date===vd()}).sort(function(a,b){return a.time<b.time?-1:a.time>b.time?1:a.id-b.id})}
+function $(i){return document.getElementById(i)}
+function nd(s){return new Date(s+"T00:00:00").toLocaleDateString("bn-BD",{day:"numeric",month:"long",year:"numeric"})}
+function mk(tag,txt,cls){var e=document.createElement(tag);if(txt)e.textContent=txt;if(cls)e.className=cls;return e}
+function noteBlock(it){
+var box=mk("div","","note");
+if(editingId===it.id){
+var ta=mk("textarea");ta.rows=3;ta.value=it.note||"";ta.placeholder="যেমন: দাঁত স্কেলিং ও ফিলিং করা হয়েছে";
+var dt=mk("input");dt.type="date";dt.min=td();dt.value=it.next||"";
+var tm=mk("input");tm.type="time";tm.value=it.nextTime||"";
+var fe=mk("input");fe.setAttribute("inputmode","numeric");fe.placeholder="যেমন: ৫০০";fe.value=feeOf(it)?bn(feeOf(it)):"";
+var nw=mk("input");nw.maxLength=80;nw.placeholder="যেমন: ফিলিং সম্পন্ন করা";nw.value=it.nextWork||"";
+var rs2=mk("input");rs2.maxLength=80;rs2.value=it.reason||"";
+var nm=mk("input");nm.value=it.name||"";var ph=mk("input");ph.setAttribute("inputmode","numeric");ph.value=bn(it.phone||"");
+var r=mk("div","","nrow");
+var sv=mk("button","সংরক্ষণ করুন","ghost");
+sv.onclick=function(){var pv=en(ph.value).replace(/[\s\-]/g,"").replace(/^\+?88/,"");
+if(!nm.value.trim()||!/^01[3-9]\d{8}$/.test(pv)){nm.style.borderColor=nm.value.trim()?"":"var(--bad)";ph.style.borderColor=/^01[3-9]\d{8}$/.test(pv)?"":"var(--bad)";return}
+var fv=parseInt(en(fe.value).replace(/\D/g,""),10)||0;upd(it,{note:ta.value.trim(),next:dt.value,nextTime:dt.value?tm.value:"",nextWork:nw.value.trim(),reason:rs2.value.trim(),name:nm.value.trim(),phone:pv});setFee(it,fv);editingId=null;render()};
+var cn=mk("button","বাদ দিন","ghost");
+cn.onclick=function(){editingId=null;render()};
+r.appendChild(sv);r.appendChild(cn);
+box.appendChild(mk("label","কী কাজ বা চিকিৎসা করা হয়েছে"));box.appendChild(ta);box.appendChild(mk("label","আসার কারণ"));box.appendChild(rs2);box.appendChild(mk("label","রোগীর নাম"));box.appendChild(nm);box.appendChild(mk("label","মোবাইল নম্বর"));box.appendChild(ph);
+box.appendChild(mk("label","পরবর্তী ভিজিটের তারিখ"));box.appendChild(dt);box.appendChild(mk("label","পরবর্তী ভিজিটের সময় (ঐচ্ছিক)"));box.appendChild(tm);box.appendChild(mk("label","পরবর্তী ভিজিটে কী কাজ হবে"));box.appendChild(nw);box.appendChild(mk("label","ফি (টাকা)"));box.appendChild(fe);box.appendChild(r);
+}else{
+if(it.note)box.appendChild(mk("p","চিকিৎসা: "+it.note));
+if(it.next)box.appendChild(mk("p","পরবর্তী ভিজিট: "+nd(it.next)+(it.nextTime?", "+fmt(it.nextTime):""),"nv"));
+if(it.nextWork)box.appendChild(mk("p","পরবর্তী কাজ: "+it.nextWork,"nv"));
+if(feeOf(it))box.appendChild(mk("p","ফি: "+bn(feeOf(it))+" টাকা","nv"));
+var b=mk("button",(it.note||it.next||feeOf(it))?"নোট বদলান":"নোট, ফি ও পরবর্তী ভিজিট যোগ করুন","ghost");
+b.onclick=function(){editingId=it.id;render()};
+box.appendChild(b);}
+return box}
+function row(it,n,doctor){
+var li=document.createElement("li");if(it.status==="done")li.className="done";
+var no=document.createElement("div");no.className="no";no.textContent=bn(n);
+var info=document.createElement("div");info.className="info";
+var b=document.createElement("b");b.textContent=it.name;
+var sp=document.createElement("span");sp.textContent=(doctor&&!showDate?"":nd(it.date)+", ")+fmt(it.time)+" • "+bn(it.phone);
+info.appendChild(b);info.appendChild(sp);if(it.reason){var rs=document.createElement("span");rs.style.display="block";rs.textContent="আসার কারণ: "+it.reason;info.appendChild(rs)}if(!doctor&&it.next){var nv=document.createElement("span");nv.style.display="block";nv.style.color="var(--brand)";nv.textContent="পরবর্তী ভিজিট: "+nd(it.next)+(it.nextTime?", "+fmt(it.nextTime):"");info.appendChild(nv)}
+li.appendChild(no);li.appendChild(info);
+var acts=document.createElement("div");acts.className="acts";
+if(doctor){
+if(it.status==="waiting"){var d=document.createElement("button");d.className="sm";d.textContent="দেখা হয়েছে";d.onclick=function(){upd(it,{status:"done"});editingId=it.id;render()};acts.appendChild(d)}
+else{var t=document.createElement("span");t.className="tag";t.textContent="দেখা হয়েছে";acts.appendChild(t);var rv=document.createElement("button");rv.className="sm";rv.textContent="ফিরিয়ে নিন";rv.onclick=function(){upd(it,{status:"waiting"});render()};acts.appendChild(rv)}
+}else{
+var tg=document.createElement("span");tg.className="tag";tg.textContent=it.status==="done"?"দেখা হয়েছে":"অপেক্ষায়";acts.appendChild(tg);
+if(it.status==="waiting"){var x=document.createElement("button");x.className="sm del";x.textContent="বাতিল";x.onclick=function(){del(it);render()};acts.appendChild(x)}}
+li.appendChild(acts);if(doctor)li.appendChild(noteBlock(it));return li}
+function up(){return items.filter(function(o){return o.date>=td()}).sort(function(a,b){return a.date<b.date?-1:a.date>b.date?1:a.time<b.time?-1:a.time>b.time?1:a.id-b.id})}
+function sn(s){return String(s||"").trim().toLowerCase()}
+var openD={};
+function detail(k){
+var d=mk("div","","det");d.onclick=function(e){e.stopPropagation()};
+var a=items.filter(function(o){return o.date===k}).sort(function(x,y){return x.time<y.time?-1:x.time>y.time?1:0});
+a.forEach(function(o){var e=mk("div","","ent");e.appendChild(mk("strong",fmt(o.time)+" – "+o.name));e.appendChild(mk("span",o.reason?"আসার কারণ: "+o.reason:"আসার কারণ লেখা নেই"));d.appendChild(e)});
+items.forEach(function(o){if(o.next===k&&!a.some(function(p){return p.phone===o.phone&&sn(p.name)===sn(o.name)})){var e=mk("div","","ent");e.appendChild(mk("strong",(o.nextTime?fmt(o.nextTime)+" – ":"")+o.name+" – পরবর্তী ভিজিট"));e.appendChild(mk("span",o.nextWork?"পরবর্তী কাজ: "+o.nextWork:"পরবর্তী কাজ লেখা নেই"));d.appendChild(e)}});
+return d}
+function renderDates(){
+var c={},f={};up().forEach(function(o){c[o.date]=(c[o.date]||0)+1});
+items.forEach(function(o){if(o.next&&o.next>=td()&&!items.some(function(p){return p.date===o.next&&p.phone===o.phone&&sn(p.name)===sn(o.name)}))f[o.next]=(f[o.next]||0)+1});
+["dates1","dates2"].forEach(function(id){var ul=$(id);ul.textContent="";
+var u={};Object.keys(c).concat(Object.keys(f)).forEach(function(k){u[k]=1});var ks=Object.keys(u).sort();
+if(!ks.length){ul.appendChild(mk("li","আসন্ন কোনো সিরিয়াল নেই।","empty"));return}
+ks.forEach(function(k){var li=mk("li"),sp=mk("span",(k===td()?"আজ – ":"")+nd(k));
+if(f[k]){var sm=mk("small","সিরিয়াল "+bn(c[k]||0)+", পরবর্তী ভিজিট "+bn(f[k]));sm.style.display="block";sm.style.color="var(--muted)";sp.appendChild(sm)}
+var key=id+k,op=!!openD[key];
+li.setAttribute("role","button");li.tabIndex=0;li.setAttribute("aria-expanded",op);
+li.appendChild(sp);li.appendChild(mk("b",bn((c[k]||0)+(f[k]||0))+" জন"+(op?" ▴":" ▾")));
+function tg(){openD[key]=!openD[key];renderDates()}
+li.onclick=tg;li.onkeydown=function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();tg()}};
+if(op)li.appendChild(detail(k));
+ul.appendChild(li)})})}
+function money(n){return bn(String(n).replace(/\B(?=(\d{3})+(?!\d))/g,","))}
+function renderDays(){
+var c={},inc={},tot=0,ti=0;
+items.forEach(function(o){if(o.status==="done"){c[o.date]=(c[o.date]||0)+1;tot++}});feeList().forEach(function(x){inc[x.date]=(inc[x.date]||0)+x.fee;ti+=x.fee});
+$("allTotal").textContent=bn(tot);$("allInc").textContent=money(ti);$("incToday").textContent=money(inc[vd()]||0);var tdy=vd()===td();$("incLbl").textContent=(tdy?"আজকের":nd(vd())+"-এর")+" মোট আয় (টাকা)";$("h2day").textContent=showDate?"খোঁজার ফলাফল":tdy?"আজকের রোগী":nd(vd())+"-এর রোগী";
+var ul=$("days");ul.textContent="";
+var u={};Object.keys(c).concat(Object.keys(inc)).forEach(function(k){u[k]=1});var ks=Object.keys(u).sort().reverse();
+if(!ks.length){ul.appendChild(mk("li","এখনো কোনো রোগী দেখা হয়নি।","empty"));return}
+ks.forEach(function(k){var li=mk("li");li.appendChild(mk("span",(k===td()?"আজ – ":"")+nd(k)));li.appendChild(mk("b",bn(c[k]||0)+" জন • "+money(inc[k]||0)+" টাকা"));ul.appendChild(li)})}
+function render(){
+var s=sorted(),qv=($("q").value||"").trim().toLowerCase(),src=qv?search(qv):s,l1=$("list1"),l2=$("list2");showDate=!!qv;l1.textContent="";l2.textContent="";
+{["list1","list2"].filter(function(i){return i==="list1"?!up().length:!src.length}).forEach(function(i){var e=document.createElement("li");e.className="empty";e.textContent="এখনো কোনো সিরিয়াল নেই। সেক্রেটারি ট্যাব থেকে যোগ করুন।";$(i).appendChild(e)})}
+src.forEach(function(it,i){l2.appendChild(row(it,i+1,true))});var cnt={};up().forEach(function(it){cnt[it.date]=(cnt[it.date]||0)+1;l1.appendChild(row(it,cnt[it.date],false))});
+var done=s.filter(function(o){return o.status==="done"}).length;
+$("sTotal").textContent=bn(s.length);$("sDone").textContent=bn(done);$("sWait").textContent=bn(s.length-done);
+var nx=s.filter(function(o){return o.status==="waiting"})[0];
+$("next").hidden=!nx||vd()!==td()||showDate;if(nx)$("nextTxt").textContent=nx.name+" – "+fmt(nx.time);
+renderDays();renderDates()}
+var unlocked=false,PWH="c198101551a40cea909c4de6b20fc1cf9ff593f321cfde26bf30a24c9183027c";
+function tab(n){var doc=n===2;$("v1").hidden=doc;$("v2").hidden=!(doc&&unlocked);$("lock").hidden=!(doc&&!unlocked);$("t1").setAttribute("aria-selected",!doc);$("t2").setAttribute("aria-selected",doc)}
+function sha(s){return crypto.subtle.digest("SHA-256",new TextEncoder().encode(s)).then(function(b){return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,"0")}).join("")})}
+$("unlock").onclick=function(){var e=$("pwerr");
+if(!window.crypto||!crypto.subtle){e.textContent="এই ব্রাউজারে পাসওয়ার্ড যাচাই হচ্ছে না।";return}
+sha("udc|"+$("pw").value).then(function(h){if(h===PWH){unlocked=true;$("pw").value="";e.textContent="";tab(2)}else e.textContent="পাসওয়ার্ড ঠিক নয়।"})};
+$("pw").onkeydown=function(e){if(e.key==="Enter")$("unlock").onclick()};
+$("lockbtn").onclick=function(){unlocked=false;editingId=null;render();tab(1)};
+$("t1").onclick=function(){tab(1)};$("t2").onclick=function(){tab(2)};
+$("add").onclick=function(){
+var name=$("name").value.trim(),phone=en($("phone").value).replace(/[\s\-]/g,"").replace(/^\+?88/,""),time=$("time").value,date=$("vdate").value,reason=$("reason").value.trim(),err=$("err");
+if(!name){err.textContent="রোগীর নাম লিখুন।";return}
+if(!/^01[3-9]\d{8}$/.test(phone)){err.textContent="সঠিক ১১ সংখ্যার মোবাইল নম্বর দিন, যেমন ০১৭XXXXXXXX।";return}
+if(!date){err.textContent="ভিজিটের তারিখ বেছে নিন।";return}
+if(date<td()){err.textContent="আজ বা আগামী দিনের তারিখ দিন।";return}
+if(!time){err.textContent="আসার সময় বেছে নিন।";return}
+err.textContent="";
+var it={id:Date.now(),name:name,phone:phone,time:time,status:"waiting",date:date,reason:reason};
+items.push(it);put(it);
+var n=items.filter(function(o){return o.date===date}).sort(function(a,b){return a.time<b.time?-1:a.time>b.time?1:a.id-b.id}).indexOf(it)+1;
+$("smsText").textContent="ইউনিক ডেন্টাল কেয়ার: প্রিয় "+name+", আপনার জন্য সিরিয়াল বুক করা হয়েছে। সিরিয়াল নং "+bn(n)+"। তারিখ: "+nd(date)+", সময়: "+fmt(time)+"। অনুগ্রহ করে সময়মতো আসবেন।";
+$("smsTo").textContent="প্রাপক: "+bn(phone);
+$("smsBox").hidden=false;$("copy").textContent="কপি করুন";
+$("name").value="";$("phone").value="";$("reason").value="";render()};
+$("copy").onclick=function(){var t=$("smsText").textContent,b=$("copy");
+function ok(){b.textContent="কপি হয়েছে"}
+try{navigator.clipboard.writeText(t).then(ok,function(){fb()})}catch(e){fb()}
+function fb(){var a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();try{document.execCommand("copy");ok()}catch(e){}document.body.removeChild(a)}};
+$("reset").onclick=function(){items=seed();save();$("smsBox").hidden=true;render()};
+$("vdate").value=td();$("vdate").min=td();
+$("ddate").value=td();$("ddate").onchange=function(){viewDate=this.value||null;render()};
+$("q").oninput=function(){editingId=null;render()};
+$("dd").value=td();
+$("wipe").onclick=function(){
+var m=$("wipeMsg");m.style.color="";
+if(!window.crypto||!crypto.subtle){m.textContent="এই ব্রাউজারে পাসওয়ার্ড যাচাই হচ্ছে না।";return}
+sha("udc|"+$("wipeTxt").value).then(function(h){if(h!==PWH){m.textContent="পাসওয়ার্ড ঠিক নয়।";return}doWipe(m)})};
+function doWipe(m){
+if(store){
+var ps=items.map(function(o){return store.doc(String(o.id)).delete()}).concat(Object.keys(feesMap).map(function(k){return fdb.doc(String(k)).delete()}));
+Promise.all(ps).then(function(){feesMap={};$("wipeTxt").value="";m.style.color="var(--ok)";m.textContent="সব তথ্য মুছে গেছে।"},werr)
+}else{items=[];save();render();$("wipeTxt").value="";m.style.color="var(--ok)";m.textContent="সব তথ্য মুছে গেছে।"}};
+$("dadd").onclick=function(){
+var e=$("derr"),name=$("dn").value.trim(),phone=en($("dp").value).replace(/[\s\-]/g,"").replace(/^\+?88/,""),date=$("dd").value,time=$("dtm").value;
+e.style.color="";
+if(!name){e.textContent="রোগীর নাম লিখুন।";return}
+if(!/^01[3-9]\d{8}$/.test(phone)){e.textContent="সঠিক ১১ সংখ্যার মোবাইল নম্বর দিন।";return}
+if(!date||!time){e.textContent="তারিখ ও সময় বেছে নিন।";return}
+var it={id:Date.now(),name:name,phone:phone,time:time,status:$("dc").checked?"done":"waiting",date:date,reason:$("dr").value.trim()};
+items.push(it);put(it);
+var fv=parseInt(en($("df").value).replace(/\D/g,""),10)||0;if(fv)setFee(it,fv);
+["dn","dp","dr","df"].forEach(function(i){$(i).value=""});
+viewDate=date;$("ddate").value=date;$("q").value="";render();
+e.style.color="var(--ok)";e.textContent="রোগী যোগ হয়েছে। উপরের তালিকায় দেখুন।"};
+var dlAPI=null;
+if(window.claude&&claude.use){claude.use("downloads").then(function(d){dlAPI=d;if(d||navigator.share)$("dlbox").hidden=false}).catch(function(){})}
+function cc(v){v=v==null?"":String(v);if(/^[=+\-@\t\r]/.test(v))v="'"+v;return '"'+v.replace(/"/g,'""')+'"'}
+function mkCSV(){
+var L=[["তারিখ","সময়","নাম","মোবাইল","আসার কারণ","অবস্থা","চিকিৎসা নোট","ফি (টাকা)","পরবর্তী ভিজিটের তারিখ","পরবর্তী ভিজিটের কাজ"].filter(function(_,i){return unlocked||i!==7}).map(cc).join(",")];
+items.slice().sort(function(a,b){return a.date<b.date?-1:a.date>b.date?1:a.time<b.time?-1:a.time>b.time?1:0}).forEach(function(o){
+L.push([cc(o.date),cc(o.time),cc(o.name),'"=""'+String(o.phone).replace(/\D/g,"")+'"""',cc(o.reason),cc(o.status==="done"?"দেখা হয়েছে":"অপেক্ষায়"),cc(o.note),cc(feeOf(o)||""),cc(o.next?o.next+(o.nextTime?" "+o.nextTime:""):o.next),cc(o.nextWork)].filter(function(_,i){return unlocked||i!==7}).join(","))});
+return "\uFEFF"+L.join("\r\n")}
+function fname(){return "unique-dental-care-"+td()+".csv"}
+function saveCSV(msg,sh){
+if(!items.length){msg.textContent="ডাউনলোড করার মতো তথ্য নেই।";return}
+if(!dlAPI){msg.textContent="এখানে ডাউনলোড চালু নেই।";return}
+dlAPI.save({filename:fname(),data:mkCSV()}).then(function(){msg.textContent=sh?"ফাইল সেভ হয়েছে। এবার WhatsApp বা Messenger থেকে ফাইলটি পাঠান।":"ফাইল সেভ হয়েছে।"},function(e){msg.textContent=e&&e.code==="declined"?"":"ডাউনলোড করা যায়নি।"})}
+$("dl").onclick=function(){saveCSV($("dlmsg"),false)};
+$("share").onclick=function(){
+var msg=$("dlmsg");
+if(!items.length){msg.textContent="শেয়ার করার মতো তথ্য নেই।";return}
+var fb=function(){saveCSV(msg,true)},file=null;
+try{file=new File([mkCSV()],fname(),{type:"text/csv"});if(!(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})))file=null}catch(e){file=null}
+if(!file){fb();return}
+navigator.share({files:[file],title:"ইউনিক ডেন্টাল কেয়ার"}).then(function(){msg.textContent=""},function(e){if(!e||e.name!=="AbortError")fb()})};
+$("today").textContent=new Date().toLocaleDateString("bn-BD",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+render();
+function localMine(){try{var s=localStorage.getItem(KEY);return s?JSON.parse(s).filter(function(o){return o.id>1e12}):[]}catch(e){return[]}}
+$("imp").onclick=function(){
+var m=localMine(),msg=$("dlmsg");
+if(!store||!m.length)return;
+Promise.all(m.map(function(o){if(!o.date)o.date=td();return Promise.all([store.doc(String(o.id)).set(strip(o)),o.fee>0?fdb.doc(String(o.id)).set({id:o.id,date:o.date,fee:o.fee}).catch(function(){}):null])})).then(function(){
+try{var all=JSON.parse(localStorage.getItem(KEY)||"[]");localStorage.setItem(KEY,JSON.stringify(all.filter(function(o){return !(o.id>1e12)})))}catch(e){}
+msg.textContent=bn(m.length)+" জন রোগীর তথ্য তোলা হয়েছে।";$("impbox").hidden=true},function(){msg.textContent="তোলা যায়নি। এডিটের অনুমতি আছে কিনা দেখুন।"})};
+function setMode(t,live){var m=$("mode");m.textContent=t;m.style.background=live?"var(--ok-bg)":"";m.style.color=live?"var(--ok)":""}
+if(window.claude&&claude.use){claude.use("db").then(function(db){
+if(!db)return;
+store=db.collection("serials");fdb=db.collection("fees");items=[];render();
+claude.use("user").then(function(u){if(!u)return;return u.can("data.write").then(function(w){if(w===false)$("rw").hidden=false})}).catch(function(){});
+fdb.onSnapshot(function(s){feesMap={};s.docs.forEach(function(d){var x=d.data();feesMap[x.id]=x});if(editingId===null)render()},function(){});
+setMode("লোড হচ্ছে…",false);$("reset").hidden=true;
+store.onSnapshot(function(snap){
+items=snap.docs.map(function(d){return clean(d.data())});
+items.forEach(function(o){if(o.fee>0&&!mig[o.id]){mig[o.id]=1;fdb.doc(String(o.id)).set({id:o.id,date:o.date,fee:o.fee}).then(function(){return store.doc(String(o.id)).update({fee:null})}).catch(function(){})}});
+setMode("লাইভ মোড: ডাক্তার ও সেক্রেটারি একই তথ্য দেখছেন। এসএমএস আসলে যায় না, বার্তাটি শুধু দেখানো হয়।",true);
+$("impbox").hidden=!localMine().length;if(editingId===null)render()},
+function(){store=null;try{var s=localStorage.getItem(KEY);items=s?JSON.parse(s):seed()}catch(e){items=seed()}
+items.forEach(function(o){if(!o.date)o.date=td()});$("reset").hidden=false;
+setMode("লাইভ সংযোগ হয়নি। তথ্য শুধু এই ফোনে থাকবে।",false);render()})
+}).catch(function(){})}
+</script>
+</body>
+</html>
