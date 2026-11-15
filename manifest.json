@@ -1,0 +1,13 @@
+{
+  "background_color": "#ffffff",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "Unique Dental Care",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "UDC",
+  "start_url": "/",
+  "theme_color": "#c0d800",
+  "id": "UDC",
+  "description": "Unique Dental Care is a specialized Dental Care Chember operated by Dr. Mamunur Rashid. MBBS, FCPS"
+}
